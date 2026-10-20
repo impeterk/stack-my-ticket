@@ -1,17 +1,13 @@
 {
+  "platform": {
+    "apiRuntime": "node:22"
+  },
   "routes": [
     {
-      "route": "/index.html",
-      "redirect": "/"
-    },
-    {
       "route": "/",
-      "rewrite": "/api/server"
+      "rewrite": "/index.html"
     }
   ],
-  "platform": {
-    "apiRuntime": "node:18"
-  },
   "navigationFallback": {
     "rewrite": "/api/server"
   }

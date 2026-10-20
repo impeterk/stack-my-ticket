@@ -16,7 +16,17 @@ const config = defineConfig({
     }),
     viteReact(),
     nitro({
-      preset: "static",
+      preset: "azure-swa",
+      prerender: {
+        routes: ["/"],
+      },
+      azure: {
+        config: {
+          platform: {
+            apiRuntime: "node:22",
+          },
+        },
+      },
     }),
   ],
 })

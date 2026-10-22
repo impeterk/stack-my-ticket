@@ -1,5 +1,6 @@
 import { type ReactNode, ViewTransition } from "react";
 
+import { Link, useLocation } from "@tanstack/react-router";
 import { cn } from "cn";
 import {
   LayoutDashboardIcon,
@@ -10,6 +11,7 @@ import {
   CogIcon,
 } from "lucide-react";
 
+import ThemeSwitcher from "@/components/theme-switch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
@@ -49,10 +51,9 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Link, useLocation } from "@tanstack/react-router";
-import { create_process_list } from "@/routes/create";
-import ThemeSwitcher from "@/components/theme-switch";
 import { useTheme } from "@/providers/theme-provider";
+import { create_process_list } from "@/routes/(app)/create/route";
+import { useAuth } from "@/providers/auth-provider";
 
 interface Workspace {
   id: string;
@@ -185,7 +186,12 @@ function MainNavigation() {
                         {item.items.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.id}>
                             <SidebarMenuSubButton
-                              render={<Link to={subItem.to} />}
+                              render={
+                                <Link
+                                  to={subItem.to}
+                                  activeProps={{ "data-active": true }}
+                                />
+                              }
                             >
                               {subItem?.icon}
                               {subItem.label}
@@ -235,6 +241,7 @@ function RecentNavigation() {
 }
 
 function AccountMenu() {
+  const { user } = useAuth();
   const { theme } = useTheme();
   return (
     <SidebarMenu>
@@ -253,9 +260,9 @@ function AccountMenu() {
               <AvatarFallback>U</AvatarFallback>
             </Avatar>
             <span className="grid min-w-0 flex-1 text-left leading-tight">
-              <span className="truncate text-sm font-medium">User Name</span>
+              <span className="truncate text-sm font-medium">{user.name}</span>
               <span className="truncate text-xs text-sidebar-foreground/70">
-                user.name@henkel.com
+                {user.email}
               </span>
             </span>
             <MoreHorizontalIcon
@@ -265,7 +272,7 @@ function AccountMenu() {
           </DropdownMenuTrigger>
           <DropdownMenuContent side="right" align="end" className="max-w-fit">
             <DropdownMenuGroup>
-              <DropdownMenuLabel>User Name</DropdownMenuLabel>
+              <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>

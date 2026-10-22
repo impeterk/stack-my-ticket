@@ -7,10 +7,16 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import tw from "@/styles/global.css?url";
 import { title } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme-provider";
-import { SidebarLayout } from "@/layouts/sidebar-layout";
+import tw from "@/styles/global.css?url";
+
+const REACT_SCAN = import.meta.env.DEV
+  ? {
+      src: "https://unpkg.com/react-scan/dist/auto.global.js",
+      crossorigin: "anonymous",
+    }
+  : {};
 
 export const Route = createRootRoute({
   head: () => ({
@@ -20,6 +26,7 @@ export const Route = createRootRoute({
       },
     ],
     links: [{ rel: "stylesheet", href: tw }],
+    scripts: [REACT_SCAN],
   }),
   notFoundComponent: () => (
     <main className="container mx-auto p-4 pt-16">
@@ -27,22 +34,18 @@ export const Route = createRootRoute({
       <p>The requested page could not be found.</p>
     </main>
   ),
-  component: () => {
-    return (
-      <ThemeProvider defaultTheme="system" storageKey="theme">
-        <RootDocument />
-      </ThemeProvider>
-    );
-  },
+  component: () => (
+    <ThemeProvider defaultTheme="system" storageKey="theme">
+      <RootDocument />
+    </ThemeProvider>
+  ),
 });
 
 function RootDocument() {
   return (
     <>
       <HeadContent />
-      <SidebarLayout>
-        <Outlet />
-      </SidebarLayout>
+      <Outlet />
       <TanStackDevtools
         config={{
           position: "bottom-right",

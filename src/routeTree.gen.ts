@@ -9,122 +9,237 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as CreateRouteImport } from './routes/create'
-import { Route as SearchRouteImport } from './routes/search'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as TicketsIndexRouteImport } from './routes/tickets/index'
+import { Route as appRouteRouteImport } from './routes/(app)/route'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as appIndexRouteImport } from './routes/(app)/index'
+import { Route as appCreateRouteRouteImport } from './routes/(app)/create/route'
+import { Route as appSearchRouteImport } from './routes/(app)/search'
+import { Route as appSettingsRouteImport } from './routes/(app)/settings'
+import { Route as appCreatePimRouteImport } from './routes/(app)/create/pim'
+import { Route as appCreateWsbaRouteImport } from './routes/(app)/create/wsba'
+import { Route as appTicketsIndexRouteImport } from './routes/(app)/tickets/index'
 
-const IndexRoute = IndexRouteImport.update({
+const appRouteRoute = appRouteRouteImport.update({
+  id: '/(app)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const appIndexRoute = appIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => appRouteRoute,
 } as any)
-const CreateRoute = CreateRouteImport.update({
+const appCreateRouteRoute = appCreateRouteRouteImport.update({
   id: '/create',
   path: '/create',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => appRouteRoute,
 } as any)
-const SearchRoute = SearchRouteImport.update({
+const appSearchRoute = appSearchRouteImport.update({
   id: '/search',
   path: '/search',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => appRouteRoute,
 } as any)
-const SettingsRoute = SettingsRouteImport.update({
+const appSettingsRoute = appSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => appRouteRoute,
 } as any)
-const TicketsIndexRoute = TicketsIndexRouteImport.update({
+const appCreatePimRoute = appCreatePimRouteImport.update({
+  id: '/pim',
+  path: '/pim',
+  getParentRoute: () => appCreateRouteRoute,
+} as any)
+const appCreateWsbaRoute = appCreateWsbaRouteImport.update({
+  id: '/wsba',
+  path: '/wsba',
+  getParentRoute: () => appCreateRouteRoute,
+} as any)
+const appTicketsIndexRoute = appTicketsIndexRouteImport.update({
   id: '/tickets/',
   path: '/tickets/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => appRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/create': typeof CreateRoute
-  '/search': typeof SearchRoute
-  '/settings': typeof SettingsRoute
-  '/tickets/': typeof TicketsIndexRoute
+  '/login': typeof LoginRoute
+  '/create': typeof appCreateRouteRouteWithChildren
+  '/search': typeof appSearchRoute
+  '/settings': typeof appSettingsRoute
+  '/': typeof appIndexRoute
+  '/create/pim': typeof appCreatePimRoute
+  '/create/wsba': typeof appCreateWsbaRoute
+  '/tickets/': typeof appTicketsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/create': typeof CreateRoute
-  '/search': typeof SearchRoute
-  '/settings': typeof SettingsRoute
-  '/tickets': typeof TicketsIndexRoute
+  '/login': typeof LoginRoute
+  '/create': typeof appCreateRouteRouteWithChildren
+  '/search': typeof appSearchRoute
+  '/settings': typeof appSettingsRoute
+  '/': typeof appIndexRoute
+  '/create/pim': typeof appCreatePimRoute
+  '/create/wsba': typeof appCreateWsbaRoute
+  '/tickets': typeof appTicketsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/create': typeof CreateRoute
-  '/search': typeof SearchRoute
-  '/settings': typeof SettingsRoute
-  '/tickets/': typeof TicketsIndexRoute
+  '/(app)': typeof appRouteRouteWithChildren
+  '/login': typeof LoginRoute
+  '/(app)/create': typeof appCreateRouteRouteWithChildren
+  '/(app)/search': typeof appSearchRoute
+  '/(app)/settings': typeof appSettingsRoute
+  '/(app)/': typeof appIndexRoute
+  '/(app)/create/pim': typeof appCreatePimRoute
+  '/(app)/create/wsba': typeof appCreateWsbaRoute
+  '/(app)/tickets/': typeof appTicketsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create' | '/search' | '/settings' | '/tickets/'
+  fullPaths:
+    | '/login'
+    | '/create'
+    | '/search'
+    | '/settings'
+    | '/'
+    | '/create/pim'
+    | '/create/wsba'
+    | '/tickets/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create' | '/search' | '/settings' | '/tickets'
-  id: '__root__' | '/' | '/create' | '/search' | '/settings' | '/tickets/'
+  to:
+    | '/login'
+    | '/create'
+    | '/search'
+    | '/settings'
+    | '/'
+    | '/create/pim'
+    | '/create/wsba'
+    | '/tickets'
+  id:
+    | '__root__'
+    | '/(app)'
+    | '/login'
+    | '/(app)/create'
+    | '/(app)/search'
+    | '/(app)/settings'
+    | '/(app)/'
+    | '/(app)/create/pim'
+    | '/(app)/create/wsba'
+    | '/(app)/tickets/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  CreateRoute: typeof CreateRoute
-  SearchRoute: typeof SearchRoute
-  SettingsRoute: typeof SettingsRoute
-  TicketsIndexRoute: typeof TicketsIndexRoute
+  appRouteRoute: typeof appRouteRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/(app)': {
+      id: '/(app)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof appRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(app)/': {
+      id: '/(app)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof appIndexRouteImport
+      parentRoute: typeof appRouteRoute
     }
-    '/create': {
-      id: '/create'
+    '/(app)/create': {
+      id: '/(app)/create'
       path: '/create'
       fullPath: '/create'
-      preLoaderRoute: typeof CreateRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof appCreateRouteRouteImport
+      parentRoute: typeof appRouteRoute
     }
-    '/search': {
-      id: '/search'
+    '/(app)/search': {
+      id: '/(app)/search'
       path: '/search'
       fullPath: '/search'
-      preLoaderRoute: typeof SearchRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof appSearchRouteImport
+      parentRoute: typeof appRouteRoute
     }
-    '/settings': {
-      id: '/settings'
+    '/(app)/settings': {
+      id: '/(app)/settings'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof appSettingsRouteImport
+      parentRoute: typeof appRouteRoute
     }
-    '/tickets/': {
-      id: '/tickets/'
+    '/(app)/create/pim': {
+      id: '/(app)/create/pim'
+      path: '/pim'
+      fullPath: '/create/pim'
+      preLoaderRoute: typeof appCreatePimRouteImport
+      parentRoute: typeof appCreateRouteRoute
+    }
+    '/(app)/create/wsba': {
+      id: '/(app)/create/wsba'
+      path: '/wsba'
+      fullPath: '/create/wsba'
+      preLoaderRoute: typeof appCreateWsbaRouteImport
+      parentRoute: typeof appCreateRouteRoute
+    }
+    '/(app)/tickets/': {
+      id: '/(app)/tickets/'
       path: '/tickets'
       fullPath: '/tickets/'
-      preLoaderRoute: typeof TicketsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof appTicketsIndexRouteImport
+      parentRoute: typeof appRouteRoute
     }
   }
 }
 
+interface appCreateRouteRouteChildren {
+  appCreatePimRoute: typeof appCreatePimRoute
+  appCreateWsbaRoute: typeof appCreateWsbaRoute
+}
+
+const appCreateRouteRouteChildren: appCreateRouteRouteChildren = {
+  appCreatePimRoute: appCreatePimRoute,
+  appCreateWsbaRoute: appCreateWsbaRoute,
+}
+
+const appCreateRouteRouteWithChildren = appCreateRouteRoute._addFileChildren(
+  appCreateRouteRouteChildren,
+)
+
+interface appRouteRouteChildren {
+  appCreateRouteRoute: typeof appCreateRouteRouteWithChildren
+  appSearchRoute: typeof appSearchRoute
+  appSettingsRoute: typeof appSettingsRoute
+  appIndexRoute: typeof appIndexRoute
+  appTicketsIndexRoute: typeof appTicketsIndexRoute
+}
+
+const appRouteRouteChildren: appRouteRouteChildren = {
+  appCreateRouteRoute: appCreateRouteRouteWithChildren,
+  appSearchRoute: appSearchRoute,
+  appSettingsRoute: appSettingsRoute,
+  appIndexRoute: appIndexRoute,
+  appTicketsIndexRoute: appTicketsIndexRoute,
+}
+
+const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
+  appRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  CreateRoute: CreateRoute,
-  SearchRoute: SearchRoute,
-  SettingsRoute: SettingsRoute,
-  TicketsIndexRoute: TicketsIndexRoute,
+  appRouteRoute: appRouteRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

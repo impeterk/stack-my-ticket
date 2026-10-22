@@ -1,9 +1,11 @@
-import { useState, type JSX } from "react";
-import { cn } from "@/lib/utils";
-import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
-import { useTheme, type Theme } from "@/providers/theme-provider";
+import { useState, type JSX } from "react"
 
-const defFunc = () => null;
+import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { useTheme, type Theme } from "@/providers/theme-provider"
+
+const defFunc = () => null
 
 function ThemeOption({
   icon,
@@ -11,17 +13,17 @@ function ThemeOption({
   isActive,
   onClick = defFunc,
 }: {
-  icon: JSX.Element;
-  value: Theme;
-  isActive?: boolean;
-  onClick?: (value: Theme) => void;
+  icon: JSX.Element
+  value: Theme
+  isActive?: boolean
+  onClick?: (value: Theme) => void
 }) {
   return (
     <button
       aria-checked={isActive}
       aria-label={`Switch to ${value} theme`}
       className={cn(
-        "relative flex size-8 cursor-default items-center justify-center rounded-full transition-all [&_svg]:size-4",
+        "relative flex size-8 cursor-default items-center justify-center rounded-full transition-all [&_svg]:size-4"
       )}
       role="radio"
       type="button"
@@ -29,7 +31,7 @@ function ThemeOption({
     >
       {icon}
     </button>
-  );
+  )
 }
 
 const THEME_OPTIONS = [
@@ -45,16 +47,16 @@ const THEME_OPTIONS = [
     icon: <MoonIcon />,
     value: "dark",
   },
-];
+]
 
 export default function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
 
-  const pos_left = `${THEME_OPTIONS.findIndex((t) => t.value === theme) * 2}rem`;
+  const pos_left = `${THEME_OPTIONS.findIndex((t) => t.value === theme) * 2}rem`
 
   return (
     <div
-      className="bg-muted ring-secondary relative inline-flex h-min items-center rounded-full ring-1"
+      className="relative inline-flex h-min items-center rounded-full bg-muted ring-1 ring-secondary"
       role="radiogroup"
     >
       {THEME_OPTIONS.map((option) => (
@@ -69,10 +71,10 @@ export default function ThemeSwitcher() {
 
       <div
         className={cn(
-          "border-foreground dark:border-primary absolute size-8 rounded-full border transition-all",
+          "absolute size-8 rounded-full border border-foreground transition-all dark:border-primary"
         )}
         style={{ left: pos_left }}
       />
     </div>
-  );
+  )
 }

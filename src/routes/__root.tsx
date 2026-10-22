@@ -1,26 +1,22 @@
-import { TanStackDevtools } from "@tanstack/react-devtools"
+import { TanStackDevtools } from "@tanstack/react-devtools";
 import {
   HeadContent,
   Outlet,
   Scripts,
   createRootRoute,
-} from "@tanstack/react-router"
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
+} from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
-import tw from "../styles/global.css?url"
+import tw from "@/styles/global.css?url";
+import { title } from "@/lib/utils";
+import { ThemeProvider } from "@/providers/theme-provider";
+import { SidebarLayout } from "@/layouts/sidebar-layout";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "TanStack Start Starter",
+        title: title(),
       },
     ],
     links: [{ rel: "stylesheet", href: tw }],
@@ -31,14 +27,22 @@ export const Route = createRootRoute({
       <p>The requested page could not be found.</p>
     </main>
   ),
-  shellComponent: RootDocument,
-})
+  component: () => {
+    return (
+      <ThemeProvider defaultTheme="system" storageKey="theme">
+        <RootDocument />
+      </ThemeProvider>
+    );
+  },
+});
 
 function RootDocument() {
   return (
     <>
       <HeadContent />
-      <Outlet />
+      <SidebarLayout>
+        <Outlet />
+      </SidebarLayout>
       <TanStackDevtools
         config={{
           position: "bottom-right",
@@ -52,5 +56,5 @@ function RootDocument() {
       />
       <Scripts />
     </>
-  )
+  );
 }

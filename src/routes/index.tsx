@@ -1,10 +1,15 @@
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 
-import { Pattern } from "@/components/examples/c-sidebar-1"
-import { Button } from "@/components/ui/button"
-
-export const Route = createFileRoute("/")({ component: App })
+const user = true;
+export const Route = createFileRoute("/")({
+  loader: () => {
+    if (user) {
+      throw redirect({ to: "/tickets" });
+    }
+  },
+  component: App,
+});
 
 function App() {
-  return <Pattern />
+  return <div>index route</div>;
 }

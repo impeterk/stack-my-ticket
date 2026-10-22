@@ -1,21 +1,40 @@
-# TanStack Start + shadcn/ui
+# Stack My Ticket
 
-This is a template for a new TanStack Start project with React, TypeScript, and shadcn/ui.
+Check my ticket in Tanstack + react
 
-## Adding components
+## Reasoning
 
-To add components to your app, run the following command:
+- Greater composition over larger codebase
+- Greater ecosystem
 
-```bash
-npx shadcn@latest add button
-```
+### List
 
-This will place the ui components in the `components` directory.
+- Layout
+  - Sidebar Layout
+    - [x] Sidebar with vertical nav
 
-## Using components
+  - Header Layout
+    - [ ] Header with nav for desktop
+    - [ ] Drawer for mobile
+  - [ ] Search bar
+  - [ ] Breadcrumbs
 
-To use the components in your app, import them as follows:
+- Pages
+  - [ ] Search
+  - [ ] Tickets
+    - [ ] Table view
+    - [ ] Kanban view
+  - [ ] Single ticket // Shared by search?item=$item and /$item pages
+    - [ ] "Chat" view
+  - [ ] Create
+    - [ ] editing
+    - [ ] marketo
+    - [ ] PIM
+    - [ ] Analytics
+    - [ ] Translation
+  - [ ] Settings / Preferences
 
-```tsx
-import { Button } from "@/components/ui/button"
-```
+- Components
+  - [x] Theme switcher
+  - [ ] Layout switcher
+  - [ ] Color scheme switcher // nice to have
